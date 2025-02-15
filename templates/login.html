@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{url_for('static',filename='output.css')}}">
     <title>Login</title>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen w-full bg-cover bg-center bg-gradient-to-r from-rose-100 to-teal-100 p-4">
+<body class="flex flex-col items-center justify-center min-h-screen w-full bg-cover bg-center bg-gradient-to-r from-rose-100 to-teal-100 p-4 dark:negrofondo">
   <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
       <!-- Imagen superior -->
       <div class="flex justify-center mb-4">
@@ -18,14 +18,14 @@
       <form action="#" method="POST">
           <div class="mb-4">
               <label for="email" class="block text-gray-600 text-sm font-semibold mb-1">Correo Electrónico</label>
-              <input type="email" id="email" name="email" required 
-                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <input type="email" id="email" name="email" required  
+                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400  " placeholder="Ingrese su Email">
           </div>
           
           <div class="mb-4">
               <label for="password" class="block text-gray-600 text-sm font-semibold mb-1">Contraseña</label>
               <input type="password" id="password" name="password" required 
-                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 " placeholder="Ingrese Su Contraseña">
           </div>
           
           <button type="submit" 

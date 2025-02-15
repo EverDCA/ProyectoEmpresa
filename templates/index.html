@@ -4,71 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{url_for('static',filename='output.css')}}">
-    <title>Document</title>
-
+    <title>Cine Sucre</title>
 </head>
-<body class="">
+<body class="flex flex-col items-center justify-center min-h-screen w-full bg-cover bg-center bg-gradient-to-r from-rose-100 to-teal-100 p-4">
 
 <!-- component -->
-<header class="min-h-screen bg-white ">
-    <!-- Navigaiton Bar -->
-    <nav class="flex items-center py-8 px-14 justify-between">
-    <div class="flex items-center">
-      <h1 class="text-2xl font-bold text-gray-700 ">LandingKit</h1>
-      <div class="ml-10">
-        <ul class="md:flex space-x-8 hidden ">
-          <li><a href="#" class="text-gray-800 font-semibold">Magazine</a></li>
-          <li><a href="#" class="text-gray-800 font-semibold">World</a></li>
-          <li><a href="#" class="text-gray-800 font-semibold">Tech</a></li>
-          <li><a href="#" class="text-gray-800 font-semibold">Health</a></li>
-          <li><a href="#" class="text-gray-800 font-semibold">Sport</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="lg:flex hidden items-center space-x-3 py-3 px-6 bg-indigo-600 text-white rounded-lg  transition-all duration-400 transform hover:scale-105 cursor-pointer hover:shadow-lg">
-   <button>Buy now</button>
-   <span>
-     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-  </svg>
-   </span>
-    </div>
+<header class="min-h-screen w-full flex flex-col items-center">
+    <!-- Navigation Bar -->
+    <nav class="flex items-center py-4 px-14 justify-between w-full max-w-6xl">
+        <div class="flex items-center">
+            <img src="{{url_for('static',filename='img/logo.svg')}}" alt="Logo" class="w-20 h-20 object-cover rounded-full">
+            <div class="ml-5">
+                <ul class="md:flex space-x-8 hidden">
+                    <li><a href="#" class="text-gray-800 font-semibold">Teatros</a></li>
+                    <li><a href="#" class="text-gray-800 font-semibold">Cartelera</a></li>
+                    <li><a href="#" class="text-gray-800 font-semibold">Estrenos</a></li>
+                    <li><a href="#" class="text-gray-800 font-semibold">Preventa</a></li>
+                </ul>
+            </div>
+        </div>
+        <a href="/login"><button type="submit" class="w-40 bg-zinc-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-zinc-800 transition duration-200">Iniciar Sesión</button></a>
     </nav>
     <!-- End Navigation Bar -->
-  
-    <!-- Section Hero -->
-    <!-- Box left -->
-    <div class="md:flex space-x-16 mt-20 md:mr-0 mr-10">
-    <div class="md:flex items-center pl-16 ">
-      <div class="">
-      <h class="lg:text-5xl  font-bold leading-tight text-3xl">Elegant Landing Pages  for your next project</h1>
-      <p class="mt-4 text-lg font-normal ">Build your site in a few second based ready-to-use block and section, <br> it's a lot of fund.</p>
-      <div class="flex mt-10 w-40 items-center space-x-3 py-3 px-6 bg-indigo-600 text-white rounded-lg  transition-all duration-400 transform hover:scale-105 cursor-pointer hover:shadow-lg">
-      <button class="text-lg text-md ">Buy now</button>
-     <span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-     </span>
-      </div>
-     </div>
-    </div>
-    <!-- Box right -->
-    <div class="max-w-lg pr-24 md:flex justify-center items-center  hidden">
-      <img class="rounded-lg" src="https://images.unsplash.com/photo-1483058712412-4245e9b90334" alt="">
-    </div>
-    </div>
-  
-    <!--Show Brand -->
-    <div class="hidden lg:block">
-        <ul class="flex mt-32 space-x-36 justify-center">
-          <li><a href="#" class="text-2xl font-semibold text-gray-600">Google</a></li>
-          <li><a href="#" class="text-2xl font-semibold text-gray-600">UBER</a></li>
-          <li><a href="#" class="text-2xl font-semibold text-gray-600">Stripe</a></li>
-          <li><a href="#" class="text-2xl font-semibold text-gray-600">Nike</a></li>
-          <li><a href="#" class="text-2xl font-semibold text-gray-600">Mashable</a></li>
-          <li><a href="#" class="text-2xl font-semibold text-gray-600">Airbnb</a></li>
-        </ul>
-    </div>
-  </header>
     
+    <!-- Section Hero -->
+    <div class="flex flex-col-reverse md:flex-row items-center mt-10 w-full max-w-6xl">
+        <div class="w-full md:w-1/2 flex justify-center">
+            <img class="rounded-lg w-full max-w-md md:max-w-lg" src="{{url_for('static',filename='img/background.jpg')}}" alt="">
+        </div>
+        <div class="w-full md:w-1/2 text-center md:text-left p-4">
+            <h1 class="lg:text-5xl font-bold leading-tight text-3xl">Cine Sucre</h1>
+            <p class="mt-4 text-lg font-normal">Mira las mejores películas y al mejor precio con Cine Sucre. Ofrecemos servicios de streaming pero también tenemos puntos físicos!</p>
+            <button type="submit" class="w-40 bg-zinc-700 text-white font-bold py-2 px-4 mt-5 rounded-lg hover:bg-zinc-800 transition duration-200 animate-bounce">Ver Más!</button>
+        </div>
+    </div>
+</header>
+
+<!-- Películas Section -->
+<section class="w-full py-12  ">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Cartelera</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
+                <img src="{{url_for('static',filename='img/interstellar.jpg')}}" alt="Película 1" class="rounded-lg w-full h-82 object-cover">
+                <h3 class="text-xl font-semibold mt-4">InterStellar</h3>
+                <p class="text-gray-600">Accion, Suspenso, Espacio Estelar</p>
+            </div>
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
+                <img src="{{url_for('static',filename='img/venom.jpg')}}" alt="Película 2" class="rounded-lg w-full h-82 object-cover ">
+                <h3 class="text-xl font-semibold mt-4">Vemon 3</h3>
+                <p class="text-gray-600">Accion, Suspenso, Comedia, Thriller</p>
+            </div>
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
+                <img src="{{url_for('static',filename='img/moana.jpg')}}" alt="Película 3" class="rounded-lg w-full h-82 object-cover">
+                <h3 class="text-xl font-semibold mt-4">Moana 2</h3>
+                <p class="text-gray-600">Familia, Comedia, Suspenso</p>
+            </div>
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
+              <img src="{{url_for('static',filename='img/it.jpg')}}" alt="Película 4" class="rounded-lg w-full h-82 object-cover">
+              <h3 class="text-xl font-semibold mt-4">It 2</h3>
+              <p class="text-gray-600">Terror, Suspenso, Sangre</p>
+          </div>
+        </div>
+    </div>
+</section>
+{% include 'footer.html' %}
 </body>
+</html>
