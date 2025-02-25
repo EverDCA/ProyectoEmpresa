@@ -23,5 +23,9 @@ def register():
 def recover():
     return render_template('recover.html')
 
+@app.route('/plans')
+def plans():
+    return render_template('plans.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

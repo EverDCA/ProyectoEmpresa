@@ -9,17 +9,17 @@
 <body class="flex flex-col items-center justify-center min-h-screen w-full bg-cover bg-center bg-gradient-to-r from-rose-100 to-teal-100 p-4">
 
 <!-- component -->
-<header class="min-h-screen flex flex-col items-center">
+<header class="min-h-screen w-full flex flex-col items-center">
     <!-- Navigation Bar -->
     <nav class="flex items-center py-4 px-14 justify-between w-full max-w-6xl">
         <div class="flex items-center">
-            <img src="{{url_for('static',filename='img/logo.svg')}}" alt="Logo" class="w-20 h-20 object-cover rounded-full">
+            <img src="{{url_for('static',filename='img/logo.svg')}}" alt="Logo" class="w-20 h-20 object-cover rounded-full" >
             <div class="ml-5">
                 <ul class="md:flex space-x-8 hidden">
-                    <li><a href="#" class="text-gray-800 font-semibold">Teatros</a></li>
-                    <li><a href="#" class="text-gray-800 font-semibold">Cartelera</a></li>
-                    <li><a href="#" class="text-gray-800 font-semibold">Estrenos</a></li>
-                    <li><a href="#" class="text-gray-800 font-semibold">Preventa</a></li>
+                    <li><a href="/" class="text-gray-800 font-semibold">Home</a></li>
+                    <li><a href="#" class="text-gray-800 font-semibold">Precios</a></li>
+                    <li><a href="#" class="text-gray-800 font-semibold">Planes</a></li>
+                    <li><a href="#" class="text-gray-800 font-semibold">Ayuda</a></li>
                 </ul>
             </div>
         </div>
@@ -34,8 +34,8 @@
         </div>
         <div class="w-full md:w-1/2 text-center md:text-left p-4">
             <h1 class="lg:text-5xl font-bold leading-tight text-3xl">Cine Sucre</h1>
-            <p class="mt-4 text-lg font-normal">Mira las mejores películas y al mejor precio con Cine Sucre. Ofrecemos servicios de streaming pero también tenemos puntos físicos!</p>
-            <button type="submit" class="w-40 bg-zinc-700 text-white font-bold py-2 px-4 mt-5 rounded-lg hover:bg-zinc-800 transition duration-200 animate-bounce">Ver Más!</button>
+            <p class="mt-4 text-lg font-normal">Mira las mejores películas y al mejor precio con Cine Sucre. Ofrecemos servicios de streaming de la mejor calidad!</p>
+            <button type="submit" class="w-40 bg-zinc-700 text-white font-bold py-2 px-4 mt-10 rounded-lg hover:bg-zinc-800 transition duration-200 animate-bounce">Ver Más!</button>
         </div>
     </div>
 </header>
@@ -46,22 +46,22 @@
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Cartelera</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
-                <img src="{{url_for('static',filename='img/interstellar.jpg')}}" alt="Película 1" class="rounded-lg w-full h-100 object-cover">
+                <img src="{{url_for('static',filename='img/interstellar.jpg')}}" alt="Película 1" class="rounded-lg w-full h-82 object-cover">
                 <h3 class="text-xl font-semibold mt-4">InterStellar</h3>
                 <p class="text-gray-600">Accion, Suspenso, Espacio Estelar</p>
             </div>
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
-                <img src="{{url_for('static',filename='img/venom.jpg')}}" alt="Película 2" class="rounded-lg w-full h-100 object-cover ">
+                <img src="{{url_for('static',filename='img/venom.jpg')}}" alt="Película 2" class="rounded-lg w-full h-82 object-cover ">
                 <h3 class="text-xl font-semibold mt-4">Vemon 3</h3>
                 <p class="text-gray-600">Accion, Suspenso, Comedia, Thriller</p>
             </div>
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
-                <img src="{{url_for('static',filename='img/moana.jpg')}}" alt="Película 3" class="rounded-lg w-full h-100 object-cover">
+                <img src="{{url_for('static',filename='img/moana.jpg')}}" alt="Película 3" class="rounded-lg w-full h-82 object-cover">
                 <h3 class="text-xl font-semibold mt-4">Moana 2</h3>
                 <p class="text-gray-600">Familia, Comedia, Suspenso</p>
             </div>
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
-              <img src="{{url_for('static',filename='img/it.jpg')}}" alt="Película 4" class="rounded-lg w-full h-100 object-cover">
+              <img src="{{url_for('static',filename='img/it.jpg')}}" alt="Película 4" class="rounded-lg w-full h-82 object-cover">
               <h3 class="text-xl font-semibold mt-4">It 2</h3>
               <p class="text-gray-600">Terror, Suspenso, Sangre</p>
           </div>
