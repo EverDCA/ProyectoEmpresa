@@ -67,6 +67,10 @@ def recover():
 def plans():
     return render_template('plans.html')
 
+@app.route('/interface')
+def interface():
+    return render_template('interface.html')
+
 # Iniciar la aplicación
 if __name__ == '__main__':
     with app.app_context():
