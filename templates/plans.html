@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{url_for('static',filename='output.css')}}">
-
     <title>Planes de Streaming</title>
 </head>
 <body class="flex flex-col min-h-screen bg-gradient-to-r from-rose-100 to-teal-100 p-4">
@@ -16,66 +15,66 @@
 </header>
 
 <!-- Main Content -->
-<main class="flex-1 container mx-auto py-10 px-4">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<main class="flex justify-center items-center flex-1 py-10 px-2 sm:px-4">
+    <div class="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto ">
         <!-- Plan SD -->
-        <div class="bg-white rounded-lg shadow-lg p-6 text-center">
-            <h2 class="text-2xl font-bold text-gray-800">Plan SD</h2>
-            <p class="mt-4 text-gray-600">Calidad estándar</p>
-            <p class="text-4xl font-extrabold mt-4 text-teal-600">$5/mes</p>
-            <ul class="mt-4 text-gray-700">
-                <li>✔ 1 Dispositivo</li>
-                <li>✔ Reproducción en SD</li>
-            </ul>
-            <button class="mt-6 bg-zinc-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-zinc-800 transition duration-200">Elegir Plan</button>
+        <div class=" flex w-full sm:w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md mt-10">
+            <div class=" mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-gradient-to-r from-yellow-200 to-orange-300 text-gray-800 text-2xl font-bold flex justify-center items-center">
+                Plan SD
+            </div>
+            <div class="p-6 text-center">
+                <h5 class="mb-2 text-xl font-bold">Calidad estándar</h5>
+                <ul class="text-gray-700 font-semibold list-disc text-left pl-5">
+                    <li>1 Dispositivo</li>
+                    <li>Reproducción en SD</li>
+                </ul>
+            </div>
+            <div class="p-6 pt-0">
+                <button class="w-full rounded-lg bg-gradient-to-r from-yellow-400 to-orange-500 p-3 font-bold text-white shadow-md hover:shadow-lg hover:from-yellow-500 hover:to-orange-600 transition">
+                    Elegir Plan
+                </button>
+            </div>
         </div>
 
         <!-- Plan HD -->
-        <div class="bg-white rounded-lg shadow-lg p-6 text-center">
-            <h2 class="text-2xl font-bold text-gray-800">Plan HD</h2>
-            <p class="mt-4 text-gray-600">Alta definición</p>
-            <p class="text-4xl font-extrabold mt-4 text-teal-600">$10/mes</p>
-            <ul class="mt-4 text-gray-700">
-                <li>✔ 2 Dispositivos</li>
-                <li>✔ Reproducción en HD</li>
-            </ul>
-            <button class="mt-6 bg-zinc-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-zinc-800 transition duration-200">Elegir Plan</button>
+        <div class=" flex w-full sm:w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md mt-10">
+            <div class=" mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-gradient-to-r from-indigo-300 to-purple-400 text-gray-800 text-2xl font-bold flex justify-center items-center">
+                Plan HD
+            </div>
+            <div class="p-6 text-center">
+                <h5 class="mb-2 text-xl font-bold">Alta definición</h5>
+                <ul class="text-gray-700 font-semibold list-disc text-left pl-5">
+                    <li>2 Dispositivos</li>
+                    <li>Reproducción en HD</li>
+                </ul>
+            </div>
+            <div class="p-6 pt-0">
+                <button class="w-full rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 p-3 font-bold text-white shadow-md hover:shadow-lg hover:from-indigo-600 hover:to-purple-700 transition">
+                    Elegir Plan
+                </button>
+            </div>
         </div>
 
         <!-- Plan 4K -->
-        <div class="bg-white rounded-lg shadow-lg p-6 text-center">
-            <h2 class="text-2xl font-bold text-gray-800">Plan 4K</h2>
-            <p class="mt-4 text-gray-600">Ultra HD</p>
-            <p class="text-4xl font-extrabold mt-4 text-teal-600">$15/mes</p>
-            <ul class="mt-4 text-gray-700">
-                <li>✔ 4 Dispositivos</li>
-                <li>✔ Reproducción en 4K</li>
-            </ul>
-            <button class="mt-6 bg-zinc-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-zinc-800 transition duration-200">Elegir Plan</button>
+        <div class=" flex w-full sm:w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md mt-10">
+            <div class=" mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-gradient-to-r from-cyan-300 to-blue-400 text-gray-800 text-2xl font-bold flex justify-center items-center">
+                Plan 4K
+            </div>
+            <div class="p-6 text-center">
+                <h5 class="mb-2 text-xl font-bold">Ultra HD</h5>
+                <ul class="text-gray-700 font-semibold list-disc text-left pl-5">
+                    <li>4 Dispositivos</li>
+                    <li>Reproducción en 4K</li>
+                </ul>
+            </div>
+            <div class="p-6 pt-0">
+                <button class="w-full rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 p-3 font-bold text-white shadow-md hover:shadow-lg hover:from-cyan-600 hover:to-blue-700 transition">
+                    Elegir Plan
+                </button>
+            </div>
         </div>
     </div>
 </main>
-
-<!-- Additional Info -->
-<section class=" py-10 mt-10">
-    <div class="container mx-auto px-6">
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Detalles de los Planes</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div class="bg-white p-4 rounded-lg">
-                <h3 class="text-xl font-semibold">Plan SD</h3>
-                <p class="text-gray-600 mt-2">Reproducción en calidad estándar (480p) en un solo dispositivo.</p>
-            </div>
-            <div class="bg-white p-4 rounded-lg">
-                <h3 class="text-xl font-semibold">Plan HD</h3>
-                <p class="text-gray-600 mt-2">Alta definición (1080p) en hasta 2 dispositivos simultáneos.</p>
-            </div>
-            <div class="bg-white p-4 rounded-lg">
-                <h3 class="text-xl font-semibold">Plan 4K</h3>
-                <p class="text-gray-600 mt-2">Calidad Ultra HD (4K) en hasta 4 dispositivos simultáneos.</p>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Footer -->
 {% include 'footer.html' %}
