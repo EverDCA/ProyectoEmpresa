@@ -40,33 +40,11 @@
 </header>
 
 <!-- Películas Section -->
-<section class="w-full my-10  ">
-    <div class="container mx-auto px-6">
+    
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Cartelera</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
-                <img src="{{url_for('static',filename='img/interstellar.jpg')}}" alt="Película 1" class="rounded-lg w-full h-82 object-cover">
-                <h3 class="text-xl font-semibold mt-4">InterStellar</h3>
-                <p class="text-gray-600">Accion, Suspenso, Espacio Estelar</p>
-            </div>
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
-                <img src="{{url_for('static',filename='img/venom.jpg')}}" alt="Película 2" class="rounded-lg w-full h-82 object-cover ">
-                <h3 class="text-xl font-semibold mt-4">Vemon 3</h3>
-                <p class="text-gray-600">Accion, Suspenso, Comedia, Thriller</p>
-            </div>
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
-                <img src="{{url_for('static',filename='img/moana.jpg')}}" alt="Película 3" class="rounded-lg w-full h-82 object-cover">
-                <h3 class="text-xl font-semibold mt-4">Moana 2</h3>
-                <p class="text-gray-600">Familia, Comedia, Suspenso</p>
-            </div>
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
-              <img src="{{url_for('static',filename='img/it.jpg')}}" alt="Película 4" class="rounded-lg w-full h-82 object-cover">
-              <h3 class="text-xl font-semibold mt-4">It 2</h3>
-              <p class="text-gray-600">Terror, Suspenso, Sangre</p>
-          </div>
-        </div>
-    </div>
-</section>
+        {% include 'carrousel.html' %}
+
+
 {% include 'footer.html' %}
 </body>
 </html>

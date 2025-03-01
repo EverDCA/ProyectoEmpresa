@@ -1,0 +1,12 @@
+<main class="flex justify-center items-center flex-1 py-10 px-2 sm:px-4">
+    <div class="relative w-full max-w-6xl overflow-hidden" id="carouselWrapper">
+        <!-- Efecto de desvanecimiento en blanco -->
+        <div class="absolute inset-0 pointer-events-none z-10" ></div>
+        
+        <div id="carouselContainer" class="flex space-x-6 p-6"></div>
+    </div>
+</main>
+
+    <!-- Agrega esta línea antes de cerrar el body -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
