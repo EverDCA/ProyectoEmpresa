@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, flash, url_for
+from flask import Flask, render_template, redirect, request, flash, url_for, session
 from config import Config
 from bd import db, Usuario
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,7 +9,7 @@ app.config.from_object(Config)
 # Inicializa la base de datos con la app
 db.init_app(app)
 
-# Rutas principales
+# Ruta principal
 @app.route('/')
 def index():
     return redirect('/cinesucre')
@@ -18,6 +18,7 @@ def index():
 def home():
     return render_template('index.html')
 
+# Login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -27,13 +28,15 @@ def login():
         usuario = Usuario.query.filter_by(email=email).first()
         
         if usuario and check_password_hash(usuario.password, password):
+            session['user_id'] = usuario.id  # Guarda el ID del usuario en la sesión
             flash('Inicio de sesión exitoso', 'success')
-            return redirect('/cinesucre')
+            return redirect('/interface')
         else:
             flash('Correo o contraseña incorrectos', 'danger')
 
     return render_template('login.html')
 
+# Registro
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -50,6 +53,7 @@ def register():
     
     return render_template('register.html')
 
+# Recuperar contraseña
 @app.route('/recover', methods=['GET', 'POST'])
 def recover():
     if request.method == 'POST':
@@ -63,13 +67,25 @@ def recover():
 
     return render_template('recover.html')
 
+# Planes
 @app.route('/plans')
 def plans():
     return render_template('plans.html')
 
+# Página protegida (solo usuarios logueados)
 @app.route('/interface')
 def interface():
+    if 'user_id' not in session:
+        flash('Debes iniciar sesión para acceder a esta página.', 'warning')
+        return redirect('/login')
     return render_template('interface.html')
+
+# Cerrar sesión
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    flash('Has cerrado sesión exitosamente.', 'info')
+    return redirect('/login')
 
 # Iniciar la aplicación
 if __name__ == '__main__':
