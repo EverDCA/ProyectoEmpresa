@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="{{url_for('static',filename='output.css')}}">
     <title>Gestión</title>
 </head>
+
+
 <body class="flex flex-col items-center justify-center min-h-screen w-full bg-gradient-to-r from-rose-100 to-teal-100 p-4">
     <nav class="flex items-center py-0 px-8 mb-8 justify-between w-full max-w-6xl">
         <div class="flex items-center">
@@ -26,7 +28,20 @@
         </div>
     </nav>
 
-   
+    {% with mensajes = get_flashed_messages(with_categories=True) %}
+    {% if mensajes %}
+        <div class="mb-4">
+            {% for categoria, mensaje in mensajes %}
+                <div class="p-4 mb-4 text-sm rounded-lg 
+                    {% if categoria == 'success' %}
+                    text-center font-bold bg-gradient-to-r from-lime-300 to-emerald-300 text-gray-800
+                    {% endif %}">
+                    {{ mensaje }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
         <!-- Tarjeta 1 -->

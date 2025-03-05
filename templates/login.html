@@ -8,13 +8,30 @@
 </head>
 <body class="flex flex-col items-center min-h-screen w-full bg-cover bg-center bg-gradient-to-r from-rose-100 to-teal-100 p-4">
     {% include 'nav.html' %}
-  
+    {% with mensajes = get_flashed_messages(with_categories=True) %}
+    {% if mensajes %}
+        <div class="mb-4">
+            {% for categoria, mensaje in mensajes %}
+                <div class="p-4 mb-4 text-sm rounded-lg 
+                    {% if categoria == 'danger' %}
+                    text-center font-bold bg-gradient-to-r from-red-300 to-orange-300 text-gray-800
+                    {% elif categoria == 'info' %}
+                    text-center font-bold bg-gradient-to-r from-sky-300 to-indigo-300 text-gray-800
+                    {% endif %}">
+                    {{ mensaje }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
     <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
       <!-- Imagen superior -->
      
       
       <h2 class="text-2xl font-bold text-center text-gray-700 my-10">Iniciar Sesión</h2>
-      
+      <!-- Mensajes Flash -->
+
+
       <form action="#" method="POST">
           <div class="mb-4">
               <label for="email" class="block text-gray-600 text-sm font-semibold mb-1">Correo Electrónico</label>

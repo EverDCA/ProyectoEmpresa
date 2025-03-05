@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.config.from_object(Config)
 
+app.secret_key = 'Ever123'  # Necesario para los mensajes flash
 # Inicializa la base de datos con la app
 db.init_app(app)
 
@@ -93,54 +94,67 @@ def interface():
     return render_template('interface.html')
 
 
-# CRUD para Empleados
 
-# Crear empleado
-@app.route('/empleados', methods=['POST'])
+# Crear Empleado (Nuevo)
+@app.route('/empleados/nuevo', methods=['GET', 'POST'])
 def crear_empleado():
-    nombre = request.form['nombre']
-    email = request.form['email']
-    telefono = request.form['telefono']
-    cargo = request.form['cargo']
-    
-    nuevo_empleado = Empleado(nombre=nombre, email=email, telefono=telefono, cargo=cargo)
-    db.session.add(nuevo_empleado)
-    db.session.commit()
-    
-    flash('Empleado creado exitosamente', 'success')
-    return redirect('/empleados')
+    if request.method == 'POST':
+        try:
+            nombre = request.form['nombre']
+            email = request.form['email']
+            telefono = request.form['telefono']
+            cargo = request.form['cargo']
 
-# Leer empleados
+            nuevo_empleado = Empleado(nombre=nombre, email=email, telefono=telefono, cargo=cargo)
+            db.session.add(nuevo_empleado)
+            db.session.commit()
+
+            flash('Empleado creado exitosamente', 'success')
+            return redirect('/empleados')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al crear empleado: {str(e)}', 'danger')
+    return render_template('nuevoEmpleado.html')
+
+# Leer Empleados (Lista)
 @app.route('/empleados', methods=['GET'])
 def listar_empleados():
     empleados = Empleado.query.all()
     return render_template('empleados.html', empleados=empleados)
 
-# Actualizar empleado
+# Actualizar Empleado (Editar)
 @app.route('/empleados/<int:id>/editar', methods=['GET', 'POST'])
 def editar_empleado(id):
     empleado = Empleado.query.get_or_404(id)
     
     if request.method == 'POST':
-        empleado.nombre = request.form['nombre']
-        empleado.email = request.form['email']
-        empleado.telefono = request.form['telefono']
-        empleado.cargo = request.form['cargo']
-        
-        db.session.commit()
-        flash('Empleado actualizado exitosamente', 'success')
-        return redirect('/empleados')
+        try:
+            empleado.nombre = request.form['nombre']
+            empleado.email = request.form['email']
+            empleado.telefono = request.form['telefono']
+            empleado.cargo = request.form['cargo']
+            
+            db.session.commit()
+            flash('Empleado actualizado exitosamente', 'success')
+            return redirect('/empleados')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al actualizar empleado: {str(e)}', 'danger')
     
-    return render_template('editar_empleado.html', empleado=empleado)
+    return render_template('editarEmpleado.html', empleado=empleado)
 
-# Eliminar empleado
+# Eliminar Empleado
 @app.route('/empleados/<int:id>/eliminar', methods=['POST'])
 def eliminar_empleado(id):
-    empleado = Empleado.query.get_or_404(id)
-    db.session.delete(empleado)
-    db.session.commit()
-    
-    flash('Empleado eliminado exitosamente', 'success')
+    try:
+        empleado = Empleado.query.get_or_404(id)
+        db.session.delete(empleado)
+        db.session.commit()
+        flash('Empleado eliminado exitosamente', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al eliminar empleado: {str(e)}', 'danger')
+
     return redirect('/empleados')
 
 

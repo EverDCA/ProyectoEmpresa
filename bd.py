@@ -18,8 +18,9 @@ class Pelicula(db.Model):
     vote_average = db.Column(db.Float, nullable=False)
     
 class Empleado(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # Agregado autoincrement=True
     nombre = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     telefono = db.Column(db.String(20), nullable=True)
     cargo = db.Column(db.String(50), nullable=False)
+
