@@ -109,7 +109,7 @@ def crear_empleado():
             db.session.add(nuevo_empleado)
             db.session.commit()
 
-            flash('Empleado creado exitosamente', 'success')
+            flash('Empleado creado exitosamente', 'info')
             return redirect('/empleados')
         except Exception as e:
             db.session.rollback()

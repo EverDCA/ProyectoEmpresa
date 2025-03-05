@@ -23,4 +23,5 @@ class Empleado(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     telefono = db.Column(db.String(20), nullable=True)
     cargo = db.Column(db.String(50), nullable=False)
+    
 
