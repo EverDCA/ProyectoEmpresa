@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='output.css') }}">
+</head>
+<body class="bg-gradient-to-r from-rose-100 to-teal-100 min-h-screen p-6">
+
+<h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Lista de Empleados</h1>
+
+<!-- Botón para agregar empleado -->
+<a href="#" id="agregar-btn" class="bg-gradient-to-r from-green-400 to-teal-400 text-white py-2 px-4 rounded-lg mb-4 inline-block">
+    Agregar Empleado
+</a>
+
+<!-- Formulario para agregar empleado (oculto por defecto) -->
+<form id="agregar-form" action="/empleados" method="POST" class="bg-white p-6 rounded-lg shadow-md mb-6 hidden">
+    <h2 class="text-xl font-bold mb-4 text-gray-800">Nuevo Empleado</h2>
+    <input type="text" name="nombre" placeholder="Nombre" class="w-full mb-3 p-2 border rounded-lg" required>
+    <input type="email" name="email" placeholder="Email" class="w-full mb-3 p-2 border rounded-lg" required>
+    <input type="text" name="telefono" placeholder="Teléfono" class="w-full mb-3 p-2 border rounded-lg" required>
+    <input type="text" name="cargo" placeholder="Cargo" class="w-full mb-3 p-2 border rounded-lg" required>
+    <button type="submit" class="bg-gradient-to-r from-green-400 to-teal-400 text-white py-2 px-4 rounded-lg">
+        Guardar
+    </button>
+</form>
+
+<a href="/" class="text-blue-500 mb-4 inline-block">Volver</a>
+
+<table class="min-w-full bg-white shadow-md rounded-lg">
+    <thead class="bg-gradient-to-r from-indigo-400 to-purple-400 text-white">
+        <tr>
+            <th class="py-2">ID</th>
+            <th class="py-2">Nombre</th>
+            <th class="py-2">Email</th>
+            <th class="py-2">Teléfono</th>
+            <th class="py-2">Cargo</th>
+            <th class="py-2">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for empleado in empleados %}
+        <tr class="text-center border-b">
+            <td class="py-2">{{ empleado.id }}</td>
+            <td class="py-2">{{ empleado.nombre }}</td>
+            <td class="py-2">{{ empleado.email }}</td>
+            <td class="py-2">{{ empleado.telefono }}</td>
+            <td class="py-2">{{ empleado.cargo }}</td>
+            <td class="py-2 space-x-2">
+                <a href="/empleados/{{ empleado.id }}/ver" class="text-green-500">Ver</a>
+                <a href="/empleados/{{ empleado.id }}/editar" class="text-blue-500">Editar</a>
+                <form action="/empleados/{{ empleado.id }}/eliminar" method="POST" class="inline">
+                    <button type="submit" class="text-red-500">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    const agregarBtn = document.getElementById('agregar-btn');
+    const agregarForm = document.getElementById('agregar-form');
+
+    agregarBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        agregarForm.classList.toggle('hidden');
+    });
+</script>
+
+</body>
+</html>

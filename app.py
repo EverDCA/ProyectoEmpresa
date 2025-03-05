@@ -1,8 +1,7 @@
-from flask import Flask, render_template, redirect, request, flash, url_for, session
+from flask import Flask, render_template, redirect, request, flash, url_for, session, jsonify
 from config import Config
-from bd import db, Usuario
+from bd import db, Usuario, Pelicula, Empleado  # Importar el modelo Empleado
 from werkzeug.security import generate_password_hash, check_password_hash
-
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -17,6 +16,19 @@ def index():
 @app.route('/cinesucre')
 def home():
     return render_template('index.html')
+
+@app.route('/api/peliculas')
+def api_peliculas():
+    peliculas = Pelicula.query.limit(50).all()
+    peliculas_json = [
+        {
+            'titulo': pelicula.titulo,
+            'descripcion': pelicula.descripcion,
+            'poster_path': pelicula.poster_path,
+            'vote_average': pelicula.vote_average
+        } for pelicula in peliculas
+    ]
+    return jsonify(peliculas_json)
 
 # Login
 @app.route('/login', methods=['GET', 'POST'])
@@ -80,12 +92,69 @@ def interface():
         return redirect('/login')
     return render_template('interface.html')
 
+
+# CRUD para Empleados
+
+# Crear empleado
+@app.route('/empleados', methods=['POST'])
+def crear_empleado():
+    nombre = request.form['nombre']
+    email = request.form['email']
+    telefono = request.form['telefono']
+    cargo = request.form['cargo']
+    
+    nuevo_empleado = Empleado(nombre=nombre, email=email, telefono=telefono, cargo=cargo)
+    db.session.add(nuevo_empleado)
+    db.session.commit()
+    
+    flash('Empleado creado exitosamente', 'success')
+    return redirect('/empleados')
+
+# Leer empleados
+@app.route('/empleados', methods=['GET'])
+def listar_empleados():
+    empleados = Empleado.query.all()
+    return render_template('empleados.html', empleados=empleados)
+
+# Actualizar empleado
+@app.route('/empleados/<int:id>/editar', methods=['GET', 'POST'])
+def editar_empleado(id):
+    empleado = Empleado.query.get_or_404(id)
+    
+    if request.method == 'POST':
+        empleado.nombre = request.form['nombre']
+        empleado.email = request.form['email']
+        empleado.telefono = request.form['telefono']
+        empleado.cargo = request.form['cargo']
+        
+        db.session.commit()
+        flash('Empleado actualizado exitosamente', 'success')
+        return redirect('/empleados')
+    
+    return render_template('editar_empleado.html', empleado=empleado)
+
+# Eliminar empleado
+@app.route('/empleados/<int:id>/eliminar', methods=['POST'])
+def eliminar_empleado(id):
+    empleado = Empleado.query.get_or_404(id)
+    db.session.delete(empleado)
+    db.session.commit()
+    
+    flash('Empleado eliminado exitosamente', 'success')
+    return redirect('/empleados')
+
+
+
 # Cerrar sesión
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
     flash('Has cerrado sesión exitosamente.', 'info')
     return redirect('/login')
+
+
+
+
 
 # Iniciar la aplicación
 if __name__ == '__main__':

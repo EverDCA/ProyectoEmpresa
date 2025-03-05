@@ -1,5 +1,4 @@
-const API_KEY = "ff13ccfe7a1b80a7e767899382e4d763";
-const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=es&page=1`;
+const API_URL = "/api/peliculas";  // API local para obtener las películas
 
 const carouselContainer = document.getElementById("carouselContainer");
 const carouselWrapper = document.getElementById("carouselWrapper");
@@ -12,7 +11,7 @@ let speed = 0.9;
 async function getMovies() {
     const response = await fetch(API_URL);
     const data = await response.json();
-    movies = data.results.slice(0, 50);
+    movies = data.slice(0, 15);  // Limitar a 50 películas
     renderMovies();
     animateCarousel();
 }
@@ -20,7 +19,7 @@ async function getMovies() {
 function renderMovies() {
     carouselContainer.innerHTML = "";
     movies.forEach(movie => createMovieCard(movie));
-    movies.slice(0, 6).forEach(movie => createMovieCard(movie)); // Duplicar para efecto infinito
+    movies.slice(0, 6).forEach(movie => createMovieCard(movie));  // Duplicar para efecto infinito
 }
 
 function createMovieCard(movie) {
@@ -29,10 +28,10 @@ function createMovieCard(movie) {
 
     movieCard.innerHTML = `
         <div class='h-80 bg-gradient-to-r from-indigo-300 to-purple-400 flex justify-center items-center'>
-            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" class="w-full h-full object-cover rounded-t-xl">
+            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.titulo}" class="w-full h-full object-cover rounded-t-xl">
         </div>
         <div class="p-4 text-center text-gray-800">
-            <h2 class="text-lg font-bold">${movie.title}</h2>
+            <h2 class="text-lg font-bold">${movie.titulo}</h2>
             <div class="flex items-center justify-center gap-1">
                 <img src="/static/img/star.svg" class="w-5 h-5">
                 <p class="text-gray-500 font-semibold">${movie.vote_average}</p>
