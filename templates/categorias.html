@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='output.css') }}">
+    <title>Lista de Categorías</title>
+</head>
+
+<body class="bg-gradient-to-r from-rose-100 to-teal-100 p-4 min-h-screen">
+    {% include 'nav.html' %}
+
+    <!-- Mensajes Flash -->
+    {% with mensajes = get_flashed_messages(with_categories=True) %}
+    {% if mensajes %}
+        <div class="mb-4 flex justify-center">
+            {% for categoria, mensaje in mensajes %}
+                <div class="p-4 mb-4 text-sm rounded-lg 
+                    {% if categoria == 'success' %}
+                    w-70 text-center font-bold bg-gradient-to-r from-lime-300 to-emerald-300 text-gray-800
+                    {% elif categoria == 'info' %}
+                    text-center font-bold bg-gradient-to-r from-sky-300 to-indigo-300 text-gray-800
+                    {% elif categoria == 'danger' %}
+                    text-center font-bold bg-gradient-to-r from-red-300 to-orange-300 text-gray-800
+                    {% endif %}">
+                    {{ mensaje }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-xl">
+        <h2 class="text-2xl font-bold text-center text-gray-700 mb-6">Lista de Categorías</h2>
+
+        <!-- Botón para agregar nueva categoría -->
+        <div class="flex justify-end mb-4">
+            <a href="/categorias/nueva"
+               class="bg-gradient-to-r from-indigo-400 to-purple-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg">
+                Agregar Categoría
+            </a>
+        </div>
+
+        <!-- Tabla de Categorías -->
+        <div class="overflow-x-auto rounded-lg">
+            <table class="min-w-full bg-white shadow-md rounded-lg">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                        <th class="py-3 px-6 text-left">Nombre</th>
+                        <th class="py-3 px-6 text-left">Descripción</th>
+                        <th class="py-3 px-6 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700">
+                    {% for categoria in categorias %}
+                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6 break-words">{{ categoria.nombre }}</td>
+                        <td class="py-3 px-6 break-words">{{ categoria.descripcion }}</td>
+                        <td class="py-3 px-6 text-center flex justify-center gap-2">
+                            
+                            <!-- Botón Editar -->
+                            <a href="/categorias/{{ categoria.id }}/editar"
+                               class="w-25 rounded-lg bg-gradient-to-r from-lime-300 to-emerald-300 p-2 font-bold text-gray-800 shadow-md hover:shadow-lg">
+                                Editar
+                            </a>
+
+                            <!-- Botón Eliminar -->
+                            <form action="/categorias/{{ categoria.id }}/eliminar" method="POST" class="inline">
+                                <button type="submit"
+                                        onclick="return confirm('¿Estás seguro de eliminar esta categoría?')"
+                                        class="w-25 rounded-lg bg-gradient-to-r from-red-300 to-orange-300 p-2 font-bold text-gray-800 shadow-md hover:shadow-lg">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+
+</html>

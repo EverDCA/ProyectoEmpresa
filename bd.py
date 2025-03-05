@@ -24,4 +24,9 @@ class Empleado(db.Model):
     telefono = db.Column(db.String(20), nullable=True)
     cargo = db.Column(db.String(50), nullable=False)
     
+    
+class Categoria(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nombre = db.Column(db.String(50), nullable=False, unique=True)
+    descripcion = db.Column(db.String(200), nullable=True)
 

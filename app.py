@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, flash, url_for, session, jsonify
 from config import Config
-from bd import db, Usuario, Pelicula, Empleado  # Importar el modelo Empleado
+from bd import db, Usuario, Pelicula, Empleado,Categoria  # Importar el modelo Empleado
 from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -93,8 +93,69 @@ def interface():
         return redirect('/login')
     return render_template('interface.html')
 
+#CRUD CATEGORIAS
+# Crear Categoría (Nuevo)
+@app.route('/categorias/nueva', methods=['GET', 'POST'])
+def crear_categoria():
+    if request.method == 'POST':
+        try:
+            nombre = request.form['nombre']
+            descripcion = request.form.get('descripcion', '')  # Descripción opcional
+
+            nueva_categoria = Categoria(nombre=nombre, descripcion=descripcion)
+            db.session.add(nueva_categoria)
+            db.session.commit()
+
+            flash('Categoría creada exitosamente', 'info')
+            return redirect('/categorias')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al crear categoría: {str(e)}', 'danger')
+    return render_template('nuevaCategoria.html')
 
 
+# Leer Categorías (Lista)
+@app.route('/categorias', methods=['GET'])
+def listar_categorias():
+    categorias = Categoria.query.all()
+    return render_template('categorias.html', categorias=categorias)
+
+
+# Actualizar Categoría (Editar)
+@app.route('/categorias/<int:id>/editar', methods=['GET', 'POST'])
+def editar_categoria(id):
+    categoria = Categoria.query.get_or_404(id)
+
+    if request.method == 'POST':
+        try:
+            categoria.nombre = request.form['nombre']
+            categoria.descripcion = request.form.get('descripcion', '')  # Descripción opcional
+
+            db.session.commit()
+            flash('Categoría actualizada exitosamente', 'success')
+            return redirect('/categorias')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al actualizar categoría: {str(e)}', 'danger')
+
+    return render_template('editarCategoria.html', categoria=categoria)
+
+
+# Eliminar Categoría
+@app.route('/categorias/<int:id>/eliminar', methods=['POST'])
+def eliminar_categoria(id):
+    try:
+        categoria = Categoria.query.get_or_404(id)
+        db.session.delete(categoria)
+        db.session.commit()
+        flash('Categoría eliminada exitosamente', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al eliminar categoría: {str(e)}', 'danger')
+
+    return redirect('/categorias')
+
+#CRUD EMPLEADOS
 # Crear Empleado (Nuevo)
 @app.route('/empleados/nuevo', methods=['GET', 'POST'])
 def crear_empleado():
