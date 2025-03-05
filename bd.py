@@ -24,9 +24,16 @@ class Empleado(db.Model):
     telefono = db.Column(db.String(20), nullable=True)
     cargo = db.Column(db.String(50), nullable=False)
     
-    
 class Categoria(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(50), nullable=False, unique=True)
     descripcion = db.Column(db.String(200), nullable=True)
+    
+class Cliente(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nombre = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    telefono = db.Column(db.String(20), nullable=True)
+    direccion = db.Column(db.String(250), nullable=True)
+    fecha_registro = db.Column(db.DateTime, default=db.func.current_timestamp())
 

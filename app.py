@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, flash, url_for, session, jsonify
 from config import Config
-from bd import db, Usuario, Pelicula, Empleado,Categoria  # Importar el modelo Empleado
+from bd import db, Usuario, Pelicula, Empleado,Categoria,Cliente  # Importar el modelo Empleado
 from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -218,6 +218,69 @@ def eliminar_empleado(id):
 
     return redirect('/empleados')
 
+# CRUD CLIENTES
+
+# Crear Cliente (Nuevo)
+@app.route('/clientes/nuevo', methods=['GET', 'POST'])
+def crear_cliente():
+    if request.method == 'POST':
+        try:
+            nombre = request.form['nombre']
+            email = request.form['email']
+            telefono = request.form.get('telefono', '')  # Opcional
+            direccion = request.form.get('direccion', '')  # Opcional
+
+            nuevo_cliente = Cliente(nombre=nombre, email=email, telefono=telefono, direccion=direccion)
+            db.session.add(nuevo_cliente)
+            db.session.commit()
+
+            flash('Cliente creado exitosamente', 'success')
+            return redirect('/clientes')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al crear cliente: {str(e)}', 'danger')
+    return render_template('nuevoCliente.html')
+
+# Leer Clientes (Lista)
+@app.route('/clientes', methods=['GET'])
+def listar_clientes():
+    clientes = Cliente.query.all()
+    return render_template('clientes.html', clientes=clientes)
+
+# Actualizar Cliente (Editar)
+@app.route('/clientes/<int:id>/editar', methods=['GET', 'POST'])
+def editar_cliente(id):
+    cliente = Cliente.query.get_or_404(id)
+    
+    if request.method == 'POST':
+        try:
+            cliente.nombre = request.form['nombre']
+            cliente.email = request.form['email']
+            cliente.telefono = request.form.get('telefono', '')  # Opcional
+            cliente.direccion = request.form.get('direccion', '')  # Opcional
+            
+            db.session.commit()
+            flash('Cliente actualizado exitosamente', 'success')
+            return redirect('/clientes')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al actualizar cliente: {str(e)}', 'danger')
+    
+    return render_template('editarCliente.html', cliente=cliente)
+
+# Eliminar Cliente
+@app.route('/clientes/<int:id>/eliminar', methods=['POST'])
+def eliminar_cliente(id):
+    try:
+        cliente = Cliente.query.get_or_404(id)
+        db.session.delete(cliente)
+        db.session.commit()
+        flash('Cliente eliminado exitosamente', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al eliminar cliente: {str(e)}', 'danger')
+
+    return redirect('/clientes')
 
 
 # Cerrar sesión

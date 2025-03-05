@@ -46,30 +46,34 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
         <!-- Tarjeta 1 -->
         <div class="bg-white p-6 rounded-lg shadow-lg text-center aspect-[4/3] flex flex-col justify-between">
-            <img src="{{url_for('static',filename='img/categoria.jpg')}}" alt="">
             <h3 class="text-xl font-bold text-gray-700 mb-2">Categorias</h3>
+            <img src="{{url_for('static',filename='img/categoria.jpg')}}" alt="" class="rounded-lg">
+            
             <a href="/categorias" class="w-full rounded-lg bg-gradient-to-r from-indigo-400 to-purple-400 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg text-center">Editar</a>
         </div>
         
 <!-- Tarjeta 2 -->
 <div class="bg-white p-6 rounded-lg shadow-lg text-center aspect-[4/3] flex flex-col justify-between">
-    <img src="{{url_for('static',filename='img/empleados.jpg')}}" alt="">
     <h3 class="text-xl font-bold text-gray-700 mb-2">Empleados</h3>
+    <img src="{{url_for('static',filename='img/empleados.jpg')}}" alt="" class="rounded-lg">
+   
     <a href="/empleados" class="w-full rounded-lg bg-gradient-to-r from-indigo-400 to-purple-400 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg text-center">Editar</a>
 </div>
 
         
         <!-- Tarjeta 3 -->
         <div class="bg-white p-6 rounded-lg shadow-lg text-center aspect-[4/3] flex flex-col justify-between">
-            <img src="{{url_for('static',filename='img/clientes.jpg')}}" alt="">
             <h3 class="text-xl font-bold text-gray-700 mb-2">Clientes</h3>
-            <button class="w-full rounded-lg bg-gradient-to-r from-indigo-400 to-purple-400 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg">Editar</button>
+            <img src="{{url_for('static',filename='img/clientes.jpg')}}" alt="" class="rounded-lg">
+           
+            
+            <a href="/clientes" class="w-full rounded-lg bg-gradient-to-r from-indigo-400 to-purple-400 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg text-center">Editar</a>
         </div>
         
         <!-- Tarjeta 4 -->
         <div class="bg-white p-6 rounded-lg shadow-lg text-center aspect-[4/3] flex flex-col justify-between">
-            <img src="{{url_for('static',filename='img/facturacion.jpg')}}" alt="">
             <h3 class="text-xl font-bold text-gray-700 mb-2">Linea De Facturacion</h3>
+            <img src="{{url_for('static',filename='img/facturacion.jpg')}}" alt="" class="rounded-lg">
             <button class="w-full rounded-lg bg-gradient-to-r from-indigo-400 to-purple-400 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg">Editar</button>
         </div>
     </div>
