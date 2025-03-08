@@ -220,6 +220,11 @@ def eliminar_empleado(id):
 
 # CRUD CLIENTES
 
+
+
+
+
+
 # Crear Cliente (Nuevo)
 @app.route('/clientes/nuevo', methods=['GET', 'POST'])
 def crear_cliente():
@@ -281,6 +286,103 @@ def eliminar_cliente(id):
         flash(f'Error al eliminar cliente: {str(e)}', 'danger')
 
     return redirect('/clientes')
+
+
+
+# CRUD PELÍCULAS
+
+
+
+# Crear Película (Nuevo)
+@app.route('/peliculas/nueva', methods=['GET', 'POST'])
+def crear_pelicula():
+    categorias = Categoria.query.all()  # Obtener categorías para el select
+    if request.method == 'POST':
+        try:
+            titulo = request.form['titulo']
+            descripcion = request.form.get('descripcion', '')  # Opcional
+            poster_path = request.form['poster_path']
+            vote_average = float(request.form['vote_average'])
+            categoria_id = request.form.get('categoria_id')
+            
+            nueva_pelicula = Pelicula(
+            titulo=titulo,
+            descripcion=descripcion,
+            poster_path=poster_path,
+            vote_average=vote_average,
+            categoria_id=int(categoria_id) if categoria_id else None
+)
+
+            db.session.add(nueva_pelicula)
+            db.session.commit()
+
+            flash('Película creada exitosamente', 'success')
+            return redirect('/peliculas')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al crear película: {str(e)}', 'danger')
+    return render_template('nuevaPelicula.html', categorias=categorias)
+
+
+# Actualizar Película (Editar)
+@app.route('/peliculas/<int:id>/editar', methods=['GET', 'POST'])
+def editar_pelicula(id):
+    pelicula = Pelicula.query.get_or_404(id)
+    categorias = Categoria.query.all()  # Obtener categorías para el select
+
+    if request.method == 'POST':
+        try:
+            pelicula.titulo = request.form['titulo']
+            pelicula.descripcion = request.form.get('descripcion', '')  # Opcional
+            pelicula.poster_path = request.form['poster_path']
+            categoria_id = request.form.get('categoria_id')
+            pelicula.categoria_id = int(categoria_id) if categoria_id else None  # Opcional
+
+            db.session.commit()
+            flash('Película actualizada exitosamente', 'success')
+            return redirect('/peliculas')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al actualizar película: {str(e)}', 'danger')
+
+    return render_template('editarPelicula.html', pelicula=pelicula, categorias=categorias)
+
+# Eliminar Película
+@app.route('/peliculas/<int:id>/eliminar', methods=['POST'])
+def eliminar_pelicula(id):
+    try:
+        pelicula = Pelicula.query.get_or_404(id)
+        db.session.delete(pelicula)
+        db.session.commit()
+        flash('Película eliminada exitosamente', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al eliminar película: {str(e)}', 'danger')
+
+    return redirect('/peliculas')
+
+
+
+#PAGINACION
+
+# Películas (Lista con paginación)
+@app.route('/peliculas', methods=['GET'])
+def listar_peliculas():
+    # Obtener el número de página actual de los parámetros de la URL (por defecto es 1)
+    page = request.args.get('page', 1, type=int)
+    # Definir cuántas películas mostrar por página
+    per_page = 5  # Puedes ajustar este valor según necesites
+
+    # Consultar las películas con paginación
+    peliculas_paginadas = Pelicula.query.paginate(page=page, per_page=per_page)
+
+    # Pasar los resultados paginados a la plantilla
+    return render_template('peliculas.html', peliculas=peliculas_paginadas)
+
+
+
+
+
 
 
 # Cerrar sesión
