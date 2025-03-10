@@ -22,15 +22,18 @@ class Categoria(db.Model):
 
 # Modelo Pelicula
 class Pelicula(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = 'pelicula'  # Asegúrate de que el nombre coincida con la tabla en la BD
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # Clave primaria única
     titulo = db.Column(db.String(200), nullable=False)
     descripcion = db.Column(db.Text, nullable=True)
     poster_path = db.Column(db.String(200), nullable=False)
     vote_average = db.Column(db.Float, nullable=False)
-    activo = db.Column(db.Boolean, default=True)  # Campo activo/inactivo
-    
-    # Campo para la clave foránea (relación con Categoria)
     categoria_id = db.Column(db.Integer, db.ForeignKey('categoria.id'), nullable=True)
+
+    # Campo para estado activo/inactivo
+    activo = db.Column(db.Boolean, default=True)
+
 
 # Modelo Empleado
 class Empleado(db.Model):

@@ -338,11 +338,12 @@ def editar_pelicula(id):
 
     if request.method == 'POST':
         try:
-            pelicula.titulo = request.form['titulo']
-            pelicula.descripcion = request.form.get('descripcion', '')  # Opcional
-            pelicula.poster_path = request.form['poster_path']
+            pelicula.titulo = request.form.get('titulo', pelicula.titulo)  # Mantener el título si no se modifica
+            pelicula.descripcion = request.form.get('descripcion', pelicula.descripcion)  # Mantener descripción
+            pelicula.poster_path = request.form.get('poster_path', pelicula.poster_path)  # Mantener poster_path
+            pelicula.vote_average = float(request.form.get('vote_average', pelicula.vote_average))  # Mantener rating
             categoria_id = request.form.get('categoria_id')
-            pelicula.categoria_id = int(categoria_id) if categoria_id else None  # Opcional
+            pelicula.categoria_id = int(categoria_id) if categoria_id else None  # Mantener categoría si aplica
 
             db.session.commit()
             flash('Película actualizada exitosamente', 'success')
@@ -352,6 +353,7 @@ def editar_pelicula(id):
             flash(f'Error al actualizar película: {str(e)}', 'danger')
 
     return render_template('editarPelicula.html', pelicula=pelicula, categorias=categorias)
+
 
 
 # Eliminar (desactivar) Película
@@ -377,7 +379,7 @@ def eliminar_pelicula(id):
 @app.route('/peliculas', methods=['GET'])
 def listar_peliculas():
     page = request.args.get('page', 1, type=int)
-    per_page = 5  # Número de películas por página
+    per_page = 3  # Número de películas por página
     # Filtrar solo las películas activas
     peliculas_paginadas = Pelicula.query.filter_by(activo=True).paginate(page=page, per_page=per_page)
     return render_template('peliculas.html', peliculas=peliculas_paginadas)

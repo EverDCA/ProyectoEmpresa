@@ -15,8 +15,14 @@
     {% if mensajes %}
         <div class="mb-4 flex justify-center">
             {% for categoria, mensaje in mensajes %}
-                <div class="p-4 mb-4 text-sm rounded-lg text-gray-800 font-bold text-center"
-                     class="{% if categoria == 'success' %} bg-gradient-to-r from-lime-300 to-emerald-300 {% elif categoria == 'info' %} bg-gradient-to-r from-sky-300 to-indigo-300 {% elif categoria == 'danger' %} bg-gradient-to-r from-red-300 to-orange-300 {% endif %}">
+                <div class="p-4 mb-4 text-sm rounded-lg 
+                    {% if categoria == 'success' %}
+                    w-70 text-center font-bold bg-gradient-to-r from-lime-300 to-emerald-300 text-gray-800
+                    {% elif categoria == 'info' %}
+                    text-center font-bold bg-gradient-to-r from-sky-300 to-indigo-300 text-gray-800
+                    {% elif categoria == 'danger' %}
+                    text-center font-bold bg-gradient-to-r from-red-300 to-orange-300 text-gray-800
+                    {% endif %}">
                     {{ mensaje }}
                 </div>
             {% endfor %}
