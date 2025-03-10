@@ -76,6 +76,29 @@
                 </tbody>
             </table>
         </div>
+        <!-- Paginación -->
+<div class="flex justify-center mt-4">
+    <nav class="inline-flex space-x-2">
+        {% if empleados.has_prev %}
+        <a href="{{ url_for('listar_empleados', page=empleados.prev_num) }}"
+           class="px-4 py-2 rounded-lg bg-gradient-to-r from-sky-200 to-indigo-200 text-gray-800 font-bold shadow-md hover:shadow-lg">
+            Anterior
+        </a>
+        {% endif %}
+
+        <span class="px-4 mx-4 py-2 bg-gradient-to-r from-indigo-300 to-purple-300 text-gray-800 font-bold rounded-lg shadow-md">
+            Página {{ empleados.page }} de {{ empleados.pages }}
+        </span>
+
+        {% if empleados.has_next %}
+        <a href="{{ url_for('listar_empleados', page=empleados.next_num) }}"
+           class="px-4 py-2 rounded-lg bg-gradient-to-r from-sky-200 to-indigo-200 text-gray-800 font-bold shadow-md hover:shadow-lg">
+            Siguiente
+        </a>
+        {% endif %}
+    </nav>
+</div>
+
     </div>
 
     {% include 'footer.html' %}

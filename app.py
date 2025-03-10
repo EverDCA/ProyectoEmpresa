@@ -184,10 +184,15 @@ def crear_empleado():
     return render_template('nuevoEmpleado.html')
 
 # Leer Empleados (Lista)
+# Leer Empleados (Lista)
 @app.route('/empleados', methods=['GET'])
 def listar_empleados():
-    empleados = Empleado.query.all()
-    return render_template('empleados.html', empleados=empleados)
+    page = request.args.get('page', 1, type=int)
+    per_page = 5  # Número de empleados por página
+    # Filtrar solo los empleados activos
+    empleados_paginados = Empleado.query.filter_by(activo=True).paginate(page=page, per_page=per_page)
+    return render_template('empleados.html', empleados=empleados_paginados)
+
 
 # Actualizar Empleado (Editar)
 @app.route('/empleados/<int:id>/editar', methods=['GET', 'POST'])
@@ -255,8 +260,12 @@ def crear_cliente():
 # Leer Clientes (Lista)
 @app.route('/clientes', methods=['GET'])
 def listar_clientes():
-    clientes = Cliente.query.all()
-    return render_template('clientes.html', clientes=clientes)
+    page = request.args.get('page', 1, type=int)
+    per_page = 5 # Número de clientes por página
+    # Filtrar solo los clientes activos
+    clientes_paginados = Cliente.query.filter_by(activo=True).paginate(page=page, per_page=per_page)
+    return render_template('clientes.html', clientes=clientes_paginados)
+
 
 # Actualizar Cliente (Editar)
 @app.route('/clientes/<int:id>/editar', methods=['GET', 'POST'])
