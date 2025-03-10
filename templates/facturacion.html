@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='output.css') }}">
+    <title>Lista de Facturas</title>
+</head>
+
+<body class="bg-gradient-to-r from-rose-100 to-teal-100 p-4 min-h-screen">
+    {% include 'nav.html' %}
+
+    <!-- Mensajes Flash -->
+    {% with mensajes = get_flashed_messages(with_categories=True) %}
+    {% if mensajes %}
+        <div class="mb-4 flex justify-center">
+            {% for categoria, mensaje in mensajes %}
+                <div class="p-4 mb-4 text-sm rounded-lg 
+                    {% if categoria == 'success' %}
+                    w-70 text-center font-bold bg-gradient-to-r from-lime-300 to-emerald-300 text-gray-800
+                    {% elif categoria == 'info' %}
+                    text-center font-bold bg-gradient-to-r from-sky-300 to-indigo-300 text-gray-800
+                    {% elif categoria == 'danger' %}
+                    text-center font-bold bg-gradient-to-r from-red-300 to-orange-300 text-gray-800
+                    {% endif %}">
+                    {{ mensaje }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-xl">
+        <h2 class="text-2xl font-bold text-center text-gray-700 mb-6">Lista de Facturas</h2>
+
+        <div class="flex justify-end mb-4">
+            <a href="/facturas/nueva"
+               class="bg-gradient-to-r from-indigo-400 to-purple-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg">
+                Agregar Factura
+            </a>
+        </div>
+
+        <div class="overflow-x-auto rounded-lg mb-4">
+            <table class="min-w-full bg-white shadow-md rounded-lg">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                        <th class="py-3 px-6 text-left">Cliente</th>
+                        <th class="py-3 px-6 text-left">Empleado</th>
+                        <th class="py-3 px-6 text-left">Plan</th>
+                        <th class="py-3 px-6 text-left">Total</th>
+                        <th class="py-3 px-6 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700">
+                    {% for factura in facturas.items %}
+                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6 break-words">{{ factura.cliente.nombre }}</td>
+                        <td class="py-3 px-6 break-words">{{ factura.empleado.nombre }}</td>
+                        <td class="py-3 px-6 break-words">{{ factura.plan.nombre }}</td>
+                        <td class="py-3 px-6 break-words">${{ factura.total }}</td>
+                        <td class="py-3 px-6 text-center flex justify-center gap-2">
+                            <a href="/facturas/{{ factura.id }}/editar"
+                               class="w-25 rounded-lg bg-gradient-to-r from-lime-300 to-emerald-300 p-2 font-bold text-gray-800 shadow-md hover:shadow-lg">
+                                Editar
+                            </a>
+                            <form action="/facturas/{{ factura.id }}/eliminar" method="POST" class="inline">
+                                <button type="submit"
+                                        onclick="return confirm('¿Estás seguro de desactivar esta factura?')"
+                                        class="w-25 rounded-lg bg-gradient-to-r from-red-300 to-orange-300 p-2 font-bold text-gray-800 shadow-md hover:shadow-lg">
+                                    Desactivar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        <div class="flex justify-center mt-6">
+            <nav class="inline-flex">
+                {% if facturas.has_prev %}
+                <a href="?page={{ facturas.prev_num }}"
+                   class="px-4 py-2 rounded-lg bg-gradient-to-r from-sky-200 to-indigo-200 text-gray-800 font-bold shadow-md hover:shadow-lg">
+                    Anterior
+                </a>
+                {% endif %}
+
+                <span class="px-4 mx-4 py-2 bg-gradient-to-r from-indigo-300 to-purple-300 text-gray-800 font-bold rounded-lg shadow-md">
+                    Página {{ facturas.page }} de {{ facturas.pages }}
+                </span>
+
+                {% if facturas.has_next %}
+                <a href="?page={{ facturas.next_num }}"
+                   class="px-4 py-2 rounded-lg bg-gradient-to-r from-sky-200 to-indigo-200 text-gray-800 font-bold shadow-md hover:shadow-lg">
+                    Siguiente
+                </a>
+                {% endif %}
+            </nav>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='output.css') }}">
+    <title>Editar Plan</title>
+</head>
+
+<body class="flex flex-col items-center min-h-screen w-full bg-cover bg-center bg-gradient-to-r from-rose-100 to-teal-100 p-4">
+    {% include 'nav.html' %}
+
+    <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
+        <h2 class="text-2xl font-bold text-center text-gray-700 my-10">Editar Plan</h2>
+
+        <form action="/planes/{{ plan.id }}/editar" method="POST">
+            <!-- Campo para el Nombre del Plan -->
+            <div class="mb-4">
+                <label for="nombre" class="block text-gray-600 text-sm font-semibold mb-1">Nombre</label>
+                <input type="text" id="nombre" name="nombre" value="{{ plan.nombre }}" required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    placeholder="Ingrese el nombre del plan">
+            </div>
+
+            <!-- Campo para el Precio del Plan -->
+            <div class="mb-4">
+                <label for="precio" class="block text-gray-600 text-sm font-semibold mb-1">Precio</label>
+                <input type="number" step="0.01" id="precio" name="precio" value="{{ plan.precio }}" required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    placeholder="Ingrese el precio del plan">
+            </div>
+
+            <!-- Campo para la Calidad del Plan -->
+            <div class="mb-4">
+                <label for="calidad" class="block text-gray-600 text-sm font-semibold mb-1">Calidad</label>
+                <select id="calidad" name="calidad" required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <option value="SD" {% if plan.calidad == 'SD' %}selected{% endif %}>SD</option>
+                    <option value="HD" {% if plan.calidad == 'HD' %}selected{% endif %}>HD</option>
+                    <option value="4K" {% if plan.calidad == '4K' %}selected{% endif %}>4K</option>
+                </select>
+            </div>
+
+            <!-- Campo para el Número de Dispositivos -->
+            <div class="mb-4">
+                <label for="n_dispositivos" class="block text-gray-600 text-sm font-semibold mb-1">Número de Dispositivos</label>
+                <input type="number" id="n_dispositivos" name="n_dispositivos" min="1" value="{{ plan.n_dispositivos }}" required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    placeholder="Ingrese el número de dispositivos permitidos">
+            </div>
+
+            <!-- Botón para Guardar los Cambios -->
+            <button type="submit"
+                class="w-full rounded-lg bg-gradient-to-r from-indigo-400 to-purple-400 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg">
+                Guardar Cambios
+            </button>
+        </form>
+
+        <!-- Enlace para Cancelar la Edición -->
+        <div class="mt-4 text-center">
+            <a href="/planes" class="text-blue-500 hover:underline">Cancelar</a>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+
+</html>

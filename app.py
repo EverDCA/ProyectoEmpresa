@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, flash, url_for, session, jsonify
 from config import Config
-from bd import db, Usuario, Pelicula, Empleado,Categoria,Cliente  # Importar el modelo Empleado
+from bd import db, Usuario, Pelicula, Empleado,Categoria,Cliente,Facturacion,Planes  # Importar el modelo Empleado
 from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -371,7 +371,158 @@ def eliminar_pelicula(id):
     return redirect('/peliculas')
 
 
+# Crear Factura (Nuevo)
+@app.route('/facturas/nueva', methods=['GET', 'POST'])
+def crear_factura():
+    if request.method == 'POST':
+        try:
+            fecha = request.form['fecha']
+            total = float(request.form['total'])
+            activo = bool(int(request.form['activo']))
+            cliente_id = int(request.form['cliente_id'])
+            empleado_id = int(request.form['empleado_id'])
+            plan_id = int(request.form['plan_id'])
 
+            nueva_factura = Facturacion(
+                fecha=fecha,
+                total=total,
+                activo=activo,
+                cliente_id=cliente_id,
+                empleado_id=empleado_id,
+                plan_id=plan_id
+            )
+            db.session.add(nueva_factura)
+            db.session.commit()
+
+            flash('Factura creada exitosamente', 'info')
+            return redirect('/facturas')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al crear factura: {str(e)}', 'danger')
+    
+    clientes = Cliente.query.all()
+    empleados = Empleado.query.all()
+    planes = Planes.query.all()
+    return render_template('nuevaFactura.html', clientes=clientes, empleados=empleados, planes=planes)
+
+# Leer Facturas (Lista)
+@app.route('/facturas')
+def listar_facturas():
+    page = request.args.get('page', 1, type=int)
+    per_page = 5  # Número de facturas por página
+    facturas_paginadas = Facturacion.query.paginate(page=page, per_page=per_page)
+    return render_template('facturacion.html', facturas=facturas_paginadas)
+
+# Actualizar Factura (Editar)
+@app.route('/facturas/<int:id>/editar', methods=['GET', 'POST'])
+def editar_factura(id):
+    factura = Facturacion.query.get_or_404(id)
+
+    if request.method == 'POST':
+        try:
+            factura.fecha = request.form['fecha']
+            factura.total = float(request.form['total'])
+            factura.activo = bool(int(request.form['activo']))
+            factura.cliente_id = int(request.form['cliente_id'])
+            factura.empleado_id = int(request.form['empleado_id'])
+            factura.plan_id = int(request.form['plan_id'])
+
+            db.session.commit()
+            flash('Factura actualizada exitosamente', 'success')
+            return redirect('/facturas')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al actualizar factura: {str(e)}', 'danger')
+
+    clientes = Cliente.query.all()
+    empleados = Empleado.query.all()
+    planes = Planes.query.all()
+    return render_template('editarFactura.html', factura=factura, clientes=clientes, empleados=empleados, planes=planes)
+
+# Eliminar (Desactivar) Factura
+@app.route('/facturas/<int:id>/eliminar', methods=['POST'])
+def eliminar_factura(id):
+    try:
+        factura = Facturacion.query.get_or_404(id)
+        factura.activo = False
+        db.session.commit()
+        flash('Factura desactivada exitosamente', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al desactivar factura: {str(e)}', 'danger')
+
+    return redirect('/facturas')
+
+#CRUD PLANES
+
+# Crear Plan (Nuevo)
+@app.route('/planes/nuevo', methods=['GET', 'POST'])
+def crear_plan():
+    if request.method == 'POST':
+        try:
+            nombre = request.form['nombre']
+            precio = float(request.form['precio'])
+            calidad = request.form['calidad']
+            n_dispositivos = int(request.form['n_dispositivos'])
+
+            nuevo_plan = Planes(nombre=nombre, precio=precio, calidad=calidad, n_dispositivos=n_dispositivos)
+            db.session.add(nuevo_plan)
+            db.session.commit()
+
+            flash('Plan creado exitosamente', 'info')
+            return redirect('/planes')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al crear plan: {str(e)}', 'danger')
+    return render_template('nuevoPlan.html')
+
+
+# Leer Planes (Lista)
+@app.route('/planes')
+def listar_planes():
+    page = request.args.get('page', 1, type=int)
+    per_page = 5  # Número de planes por página
+    # Filtrar solo los planes activos
+    planes_paginados = Planes.query.filter_by(activo=True).paginate(page=page, per_page=per_page)
+    return render_template('planes.html', planes=planes_paginados)
+
+
+# Actualizar Plan (Editar)
+@app.route('/planes/<int:id>/editar', methods=['GET', 'POST'])
+def editar_plan(id):
+    plan = Planes.query.get_or_404(id)
+
+    if request.method == 'POST':
+        try:
+            plan.nombre = request.form['nombre']
+            plan.precio = float(request.form['precio'])
+            plan.calidad = request.form['calidad']
+            plan.n_dispositivos = int(request.form['n_dispositivos'])
+
+            db.session.commit()
+            flash('Plan actualizado exitosamente', 'success')
+            return redirect('/planes')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error al actualizar plan: {str(e)}', 'danger')
+
+    return render_template('editarPlan.html', plan=plan)
+
+
+# Eliminar (Desactivar) Plan
+@app.route('/planes/<int:id>/eliminar', methods=['POST'])
+def eliminar_plan(id):
+    try:
+        plan = Planes.query.get_or_404(id)
+        # Cambiar estado a inactivo en lugar de eliminar
+        plan.activo = False
+        db.session.commit()
+        flash('Plan desactivado exitosamente', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al desactivar plan: {str(e)}', 'danger')
+
+    return redirect('/planes')
 
 #PAGINACION
 
