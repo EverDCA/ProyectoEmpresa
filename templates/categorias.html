@@ -33,17 +33,15 @@
 
     <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-xl">
         <h2 class="text-2xl font-bold text-center text-gray-700 mb-6">Lista de Categorías</h2>
-
-        <!-- Botón para agregar nueva categoría -->
+    
         <div class="flex justify-end mb-4">
             <a href="/categorias/nueva"
                class="bg-gradient-to-r from-indigo-400 to-purple-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg">
                 Agregar Categoría
             </a>
         </div>
-
-        <!-- Tabla de Categorías -->
-        <div class="overflow-x-auto rounded-lg">
+    
+        <div class="overflow-x-auto rounded-lg mb-4">
             <table class="min-w-full bg-white shadow-md rounded-lg">
                 <thead>
                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -53,19 +51,15 @@
                     </tr>
                 </thead>
                 <tbody class="text-gray-700">
-                    {% for categoria in categorias %}
+                    {% for categoria in categorias.items %}
                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                         <td class="py-3 px-6 break-words">{{ categoria.nombre }}</td>
                         <td class="py-3 px-6 break-words">{{ categoria.descripcion }}</td>
                         <td class="py-3 px-6 text-center flex justify-center gap-2">
-                            
-                            <!-- Botón Editar -->
                             <a href="/categorias/{{ categoria.id }}/editar"
                                class="w-25 rounded-lg bg-gradient-to-r from-lime-300 to-emerald-300 p-2 font-bold text-gray-800 shadow-md hover:shadow-lg">
                                 Editar
                             </a>
-
-                            <!-- Botón Eliminar -->
                             <form action="/categorias/{{ categoria.id }}/eliminar" method="POST" class="inline">
                                 <button type="submit"
                                         onclick="return confirm('¿Estás seguro de eliminar esta categoría?')"
@@ -79,7 +73,36 @@
                 </tbody>
             </table>
         </div>
+    
+        <!-- Paginación -->
+        <div class="flex justify-center mt-6">
+            <nav class="inline-flex">
+                {% if categorias.has_prev %}
+                <a href="?page={{ categorias.prev_num }}"
+                class="px-4 py-2 rounded-lg bg-gradient-to-r  from-sky-200 to-indigo-200 text-gray-800 font-bold shadow-md hover:shadow-lg">
+                    Anterior
+                </a>
+                {% else %}
+                <span class="px-4 py-2 rounded-lg bg-gradient-to-r  from-sky-200 to-indigo-200 text-gray-800 font-bold shadow-md hover:shadow-lg">Anterior</span>
+                {% endif %}
+    
+                <span class="px-4 mx-4 py-2 bg-gradient-to-r from-indigo-300 to-purple-300 text-gray-800 font-bold rounded-lg shadow-md">
+                    Página {{ categorias.page }} de {{ categorias.pages }}
+                </span>
+    
+                {% if categorias.has_next %}
+                <a href="?page={{ categorias.next_num }}"
+                class="px-4 py-2 rounded-lg bg-gradient-to-r from-sky-200 to-indigo-200 text-gray-800 font-bold shadow-md hover:shadow-lg">
+                    Siguiente
+                </a>
+                {% else %}
+                <span  class="px-4 py-2 rounded-lg bg-gradient-to-r from-sky-200 to-indigo-200 text-gray-800 font-bold shadow-md hover:shadow-lg">Siguiente</span>
+                {% endif %}
+            </nav>
+        </div>
+        
     </div>
+    
 
     {% include 'footer.html' %}
 </body>

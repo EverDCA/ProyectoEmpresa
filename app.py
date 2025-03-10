@@ -115,11 +115,13 @@ def crear_categoria():
 
 
 # Leer Categorías (Lista)
-@app.route('/categorias', methods=['GET'])
-def listar_categorias():
-    categorias = Categoria.query.all()
-    return render_template('categorias.html', categorias=categorias)
 
+@app.route('/categorias')
+def listar_categorias():
+    page = request.args.get('page', 1, type=int)
+    per_page = 5  # Número de categorías por página
+    categorias_paginadas = Categoria.query.paginate(page=page, per_page=per_page)
+    return render_template('categorias.html', categorias=categorias_paginadas)
 
 # Actualizar Categoría (Editar)
 @app.route('/categorias/<int:id>/editar', methods=['GET', 'POST'])
@@ -378,7 +380,6 @@ def listar_peliculas():
 
     # Pasar los resultados paginados a la plantilla
     return render_template('peliculas.html', peliculas=peliculas_paginadas)
-
 
 
 
