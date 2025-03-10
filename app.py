@@ -120,7 +120,8 @@ def crear_categoria():
 def listar_categorias():
     page = request.args.get('page', 1, type=int)
     per_page = 5  # Número de categorías por página
-    categorias_paginadas = Categoria.query.paginate(page=page, per_page=per_page)
+    # Filtrar solo las categorías activas
+    categorias_paginadas = Categoria.query.filter_by(activo=True).paginate(page=page, per_page=per_page)
     return render_template('categorias.html', categorias=categorias_paginadas)
 
 # Actualizar Categoría (Editar)
@@ -143,19 +144,22 @@ def editar_categoria(id):
     return render_template('editarCategoria.html', categoria=categoria)
 
 
-# Eliminar Categoría
+
+# Eliminar (Desactivar) Categoría
 @app.route('/categorias/<int:id>/eliminar', methods=['POST'])
 def eliminar_categoria(id):
     try:
         categoria = Categoria.query.get_or_404(id)
-        db.session.delete(categoria)
+        # Cambiar estado a inactivo en lugar de eliminar
+        categoria.activo = False
         db.session.commit()
-        flash('Categoría eliminada exitosamente', 'success')
+        flash('Categoría desactivada exitosamente', 'success')
     except Exception as e:
         db.session.rollback()
-        flash(f'Error al eliminar categoría: {str(e)}', 'danger')
+        flash(f'Error al desactivar categoría: {str(e)}', 'danger')
 
     return redirect('/categorias')
+
 
 #CRUD EMPLEADOS
 # Crear Empleado (Nuevo)
@@ -349,19 +353,21 @@ def editar_pelicula(id):
 
     return render_template('editarPelicula.html', pelicula=pelicula, categorias=categorias)
 
-# Eliminar Película
+
+# Eliminar (desactivar) Película
 @app.route('/peliculas/<int:id>/eliminar', methods=['POST'])
 def eliminar_pelicula(id):
     try:
         pelicula = Pelicula.query.get_or_404(id)
-        db.session.delete(pelicula)
+        pelicula.activo = False  # Cambia el estado a inactivo
         db.session.commit()
-        flash('Película eliminada exitosamente', 'success')
+        flash('Película desactivada exitosamente', 'success')
     except Exception as e:
         db.session.rollback()
-        flash(f'Error al eliminar película: {str(e)}', 'danger')
+        flash(f'Error al desactivar la película: {str(e)}', 'danger')
 
     return redirect('/peliculas')
+
 
 
 
@@ -370,16 +376,12 @@ def eliminar_pelicula(id):
 # Películas (Lista con paginación)
 @app.route('/peliculas', methods=['GET'])
 def listar_peliculas():
-    # Obtener el número de página actual de los parámetros de la URL (por defecto es 1)
     page = request.args.get('page', 1, type=int)
-    # Definir cuántas películas mostrar por página
-    per_page = 5  # Puedes ajustar este valor según necesites
-
-    # Consultar las películas con paginación
-    peliculas_paginadas = Pelicula.query.paginate(page=page, per_page=per_page)
-
-    # Pasar los resultados paginados a la plantilla
+    per_page = 5  # Número de películas por página
+    # Filtrar solo las películas activas
+    peliculas_paginadas = Pelicula.query.filter_by(activo=True).paginate(page=page, per_page=per_page)
     return render_template('peliculas.html', peliculas=peliculas_paginadas)
+
 
 
 
