@@ -62,14 +62,13 @@
                                 Editar
                             </a>
 
-                            <form action="/empleados/{{ empleado.id }}/eliminar" method="POST" class="inline">
-                                <button type="submit"
-                                        onclick="return confirm('¿Estás seguro de eliminar este empleado?')"
-                                        class="w-25 rounded-lg bg-gradient-to-r from-red-300 to-orange-300 p-2 font-bold text-gray-800 shadow-md hover:shadow-lg">
-                                    Eliminar
-                              
+                            
+                            <form action="/empleados/{{ empleado.id }}/desactivar" method="POST" onsubmit="return confirm('¿Seguro que quieres desactivar este empleado?');">
+                                <button type="submit" class="w-25 rounded-lg bg-gradient-to-r from-red-300 to-orange-300 p-2 font-bold text-gray-800 shadow-md hover:shadow-lg">
+                                    Desactivar
                                 </button>
                             </form>
+                            
                         </td>
                     </tr>
                     {% endfor %}
