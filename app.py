@@ -193,6 +193,7 @@ def crear_empleado():
 # Leer Empleados (Lista)
 @app.route('/empleados', methods=['GET'])
 def listar_empleados():
+
     page = request.args.get('page', 1, type=int)
     per_page = 5  # Número de empleados por página
     # Filtrar solo los empleados activos
@@ -222,18 +223,19 @@ def editar_empleado(id):
     return render_template('editarEmpleado.html', empleado=empleado)
 
 # Eliminar Empleado
-@app.route('/empleados/<int:id>/eliminar', methods=['POST'])
-def eliminar_empleado(id):
+@app.route('/empleados/<int:id>/desactivar', methods=['POST'])
+def desactivar_empleado(id):
     try:
         empleado = Empleado.query.get_or_404(id)
-        db.session.delete(empleado)
+        empleado.activo = False  # Cambia el estado a inactivo
         db.session.commit()
-        flash('Empleado eliminado exitosamente', 'success')
+        flash('Empleado desactivado exitosamente', 'success')
     except Exception as e:
         db.session.rollback()
-        flash(f'Error al eliminar empleado: {str(e)}', 'danger')
+        flash(f'Error al desactivar empleado: {str(e)}', 'danger')
 
     return redirect('/empleados')
+
 
 # CRUD CLIENTES
 
@@ -425,7 +427,7 @@ def crear_factura():
 def listar_facturas():
     page = request.args.get('page', 1, type=int)
     per_page = 5  # Número de facturas por página
-    facturas_paginadas = Facturacion.query.paginate(page=page, per_page=per_page)
+    facturas_paginadas = Facturacion.query.filter_by(activo=True).paginate(page=page, per_page=per_page)
     return render_template('facturacion.html', facturas=facturas_paginadas)
 
 # Actualizar Factura (Editar)
