@@ -9,6 +9,12 @@ app.secret_key = 'Ever123'  # Necesario para los mensajes flash
 # Inicializa la base de datos con la app
 db.init_app(app)
 
+@app.context_processor
+def inject_user():
+    return dict(user_id=session.get('user_id'))
+
+
+
 # Ruta principal
 @app.route('/')
 def index():

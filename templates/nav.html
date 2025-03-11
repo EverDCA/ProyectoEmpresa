@@ -1,13 +1,32 @@
-<nav class="flex items-center py-0 px-8 mb-8 justify-between w-full max-w-6xl ">
-    <div class="flex items-center ">
-        <a href="/"><img src="{{url_for('static',filename='img/logo.svg')}}" alt="Logo" class="w-20 h-20 object-cover rounded-full" href="/"></a>
+<nav class="flex items-center py-0 px-8 mb-8 justify-between w-full max-w-6xl">
+    <div class="flex items-center">
+        <a href="/"><img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo"
+                class="w-20 h-20 object-cover rounded-full"></a>
         
         <div class="ml-5">
             <ul class="md:flex space-x-8 hidden">
                 <li><a href="/" class="text-gray-800 font-semibold">Home</a></li>
                 <li><a href="/plans" class="text-gray-800 font-semibold">Planes</a></li>
                 <li><a href="#" class="text-gray-800 font-semibold">Ayuda</a></li>
+                
+                {% if user_id %}  
+                    <li><a href="/interface" class="text-gray-800 font-semibold">DashBoard</a></li>
+                {% endif %}
             </ul>
         </div>
+    </div>
+    
+    <div class="justify-end max-w-4xl">
+        {% if user_id %}
+            <a href="/logout"
+                class="w-60 rounded-lg bg-gradient-to-r from-red-300 to-orange-400 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg mt-10">
+                Cerrar Sesión
+            </a>
+        {% else %}
+            <a href="/login"
+                class="w-60 rounded-lg bg-gradient-to-r from-blue-300 to-blue-500 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg mt-10">
+                Iniciar Sesión
+            </a>
+        {% endif %}
     </div>
 </nav>

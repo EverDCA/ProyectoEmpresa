@@ -9,24 +9,7 @@
 
 
 <body class="flex flex-col items-center justify-center min-h-screen w-full bg-gradient-to-r from-rose-100 to-teal-100 p-4">
-    <nav class="flex items-center py-0 px-8 mb-8 justify-between w-full max-w-6xl">
-        <div class="flex items-center">
-            <a href="/"><img src="{{url_for('static',filename='img/logo.svg')}}" alt="Logo" class="w-20 h-20 object-cover rounded-full" href="/"></a>
-            
-            <div class="ml-5">
-                <ul class="md:flex space-x-8 hidden">
-                    <li><a href="/" class="text-gray-800 font-semibold">Home</a></li>
-                    <li><a href="/plans" class="text-gray-800 font-semibold">Planes</a></li>
-                    <li><a href="#" class="text-gray-800 font-semibold">Ayuda</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="justify-end max-w-4xl ">
-            <a href="/logout" class="w-60 rounded-lg bg-gradient-to-r from-red-300 to-orange-400 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg mt-10">
-                Cerrar Sesión
-            </a>
-        </div>
-    </nav>
+    {% include 'nav.html' %}
 
     {% with mensajes = get_flashed_messages(with_categories=True) %}
     {% if mensajes %}
@@ -98,5 +81,6 @@
             <a href="/planes" class="w-full rounded-lg bg-gradient-to-r from-indigo-400 to-purple-400 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg text-center">Editar</a>
         </div>
     </div>
+    {% include 'footer.html' %}
 </body>
 </html>

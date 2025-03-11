@@ -11,19 +11,7 @@
 <!-- component -->
 <header class="min-h-screen w-full flex flex-col items-center">
     <!-- Navigation Bar -->
-    <nav class="flex items-center py-4 px-10 justify-between w-full max-w-6xl">
-        <div class="flex items-center">
-            <img src="{{url_for('static',filename='img/logo.svg')}}" alt="Logo" class="w-20 h-20 object-cover rounded-full" >
-            <div class="ml-5">
-                <ul class="md:flex space-x-8 hidden">
-                    <li><a href="/" class="text-gray-800 font-semibold">Home</a></li>
-                    <li><a href="/plans" class="text-gray-800 font-semibold">Planes</a></li>
-                    <li><a href="#" class="text-gray-800 font-semibold">Ayuda</a></li>
-                </ul>
-            </div>
-        </div>
-        <a href="/login"><button type="submit" class="w-40 rounded-lg bg-gradient-to-r from-cyan-400 to-blue-400 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg">Iniciar Sesión</button></a>
-    </nav>
+    {% include 'nav.html' %}
     <!-- End Navigation Bar -->
     
     <!-- Section Hero -->
