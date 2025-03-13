@@ -1,37 +1,68 @@
-<header class=" w-full flex flex-col items-center text-center">
-    <nav class="flex items-center py-0 px-8 mb-8 justify-between w-full max-w-6xl">
-        <div class="flex items-center">
-            <a href="/"><img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo"
-                    class="w-20 h-20 object-cover rounded-full"></a>
-            
-            <div class="ml-5">
-                <ul class="md:flex space-x-8 hidden">
-                    <li><a href="/" class="text-gray-800 font-semibold">Home</a></li>
-                    <li><a href="/plans" class="text-gray-800 font-semibold">Planes</a></li>
-                    <li><a href="#" class="text-gray-800 font-semibold">Ayuda</a></li>
-                    
-                    {% if user_id %}  
-                        <li><a href="/interface" class="text-gray-800 font-semibold">DashBoard</a></li>
-                    {% endif %}
-                </ul>
-            </div>
+<header class="w-full flex flex-col items-center text-center">
+    <nav class="flex items-center py-4 px-4 md:px-8 mb-4 justify-between w-full max-w-6xl">
+        <!-- Contenedor del logo y el menú -->
+        <div class="flex items-center space-x-6">
+            <a href="/">
+                <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="Logo"
+                    class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-full">
+            </a>
+
+            <!-- Menú principal (alineado a la izquierda en pantallas grandes) -->
+            <ul class="hidden md:flex space-x-4 sm:space-x-6 lg:space-x-8">
+                <li><a href="/" class="text-gray-800 font-semibold">Home</a></li>
+                <li><a href="/plans" class="text-gray-800 font-semibold">Planes</a></li>
+                <li><a href="#" class="text-gray-800 font-semibold">Ayuda</a></li>
+                {% if user_id %}
+                    <li><a href="/interface" class="text-gray-800 font-semibold">DashBoard</a></li>
+                {% endif %}
+            </ul>
         </div>
-        
-        <div class="justify-end max-w-4xl">
+
+        <!-- Botón de sesión (mantiene alineación a la derecha) -->
+        <div class="hidden md:flex justify-end">
             {% if user_id %}
                 <a href="/logout"
-                    class="w-60 rounded-lg bg-gradient-to-r from-red-300 to-orange-400 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg mt-10">
+                    class="w-40 sm:w-52 rounded-lg bg-gradient-to-r from-red-300 to-orange-400 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg text-center">
                     Cerrar Sesión
                 </a>
             {% else %}
                 <a href="/login"
-                    class="w-60 rounded-lg bg-gradient-to-r from-blue-300 to-blue-500 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg mt-10">
+                    class="w-40 sm:w-52 rounded-lg bg-gradient-to-r from-blue-300 to-blue-500 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg text-center">
                     Iniciar Sesión
                 </a>
             {% endif %}
         </div>
+
+        <!-- Botón del menú hamburguesa (solo en móviles) -->
+        <button id="menuToggle" class="md:hidden focus:outline-none">
+            <svg class="w-8 h-8 text-gray-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
     </nav>
+
+    <!-- Menú desplegable en móviles -->
+    <div id="mobileMenu" class="hidden w-full bg-white/50 shadow-md flex flex-col items-center space-y-4 py-4 rounded-2xl mb-5">
+        <a href="/" class="text-gray-800 font-semibold">Home</a>
+        <a href="/plans" class="text-gray-800 font-semibold">Planes</a>
+        <a href="#" class="text-gray-800 font-semibold">Ayuda</a>
+        {% if user_id %}
+            <a href="/interface" class="text-gray-800 font-semibold">DashBoard</a>
+            <a href="/logout" class="w-40 rounded-lg bg-red-300 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg text-center">
+                Cerrar Sesión
+            </a>
+        {% else %}
+            <a href="/login" class="w-40 rounded-lg bg-blue-300 p-3 font-bold text-gray-800 shadow-md hover:shadow-lg text-center">
+                Iniciar Sesión
+            </a>
+        {% endif %}
+    </div>
 </header>
 
-
-
+<!-- JavaScript para mostrar/ocultar el menú hamburguesa -->
+<script>
+    document.getElementById("menuToggle").addEventListener("click", function () {
+        let menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("hidden");
+    });
+</script>
