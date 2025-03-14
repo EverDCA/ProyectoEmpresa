@@ -7,19 +7,21 @@
     <title>Planes de Streaming</title>
 </head>
 <body class="flex flex-col min-h-screen bg-gradient-to-r from-rose-100 to-teal-100 p-4">
-    
+
 <!-- Header -->
-<header class=" w-full flex flex-col items-center text-center">
+<header class="py-6 text-center">
     {% include 'nav.html' %}
     <h1 class="text-3xl font-bold text-gray-800">Nuestros Planes de Streaming</h1>
 </header>
 
+
+
 <!-- Main Content -->
 <main class="flex justify-center items-center flex-1 py-10 px-2 sm:px-4">
-    <div class="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto ">
+    <div class="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3  gap-6 max-w-6xl mx-auto ">
         <!-- Plan SD -->
-        <div class=" flex w-full sm:w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md mt-10">
-            <div class=" mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-gradient-to-r from-yellow-200 to-red-300 text-gray-800 text-2xl font-bold flex justify-center items-center">
+        <div class=" flex w-full sm:w-80 flex-col rounded-xl bg-white/40 bg-clip-border text-gray-700 shadow-md mt-10">
+            <div class=" mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-gradient-to-r from-yellow-200 to-orange-300 text-gray-800 text-2xl font-bold flex justify-center items-center">
                 Plan SD
             </div>
             <div class="p-6 text-center">
@@ -30,14 +32,14 @@
                 </ul>
             </div>
             <div class="p-6 pt-0">
-                <button class="w-full rounded-lg bg-gradient-to-r from-yellow-300 to-red-400 p-3 font-bold text-white shadow-md hover:shadow-lg hover:from-yellow-400 hover:to-red-500 transition">
+                <button class="w-full rounded-lg bg-gradient-to-r from-yellow-400 to-orange-500 p-3 font-bold text-white shadow-md hover:shadow-lg hover:from-yellow-500 hover:to-orange-600 transition">
                     Elegir Plan
                 </button>
             </div>
         </div>
 
         <!-- Plan HD -->
-        <div class=" flex w-full sm:w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md mt-10">
+        <div class=" flex w-full sm:w-80 flex-col rounded-xl bg-white/40 bg-clip-border text-gray-700 shadow-md mt-10">
             <div class=" mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-gradient-to-r from-indigo-300 to-purple-400 text-gray-800 text-2xl font-bold flex justify-center items-center">
                 Plan HD
             </div>
@@ -56,7 +58,7 @@
         </div>
 
         <!-- Plan 4K -->
-        <div class=" flex w-full sm:w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md mt-10">
+        <div class=" flex w-full sm:w-80 flex-col rounded-xl bg-white/40 bg-clip-border text-gray-700 shadow-md mt-10">
             <div class=" mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-gradient-to-r from-cyan-300 to-blue-400 text-gray-800 text-2xl font-bold flex justify-center items-center">
                 Plan 4K
             </div>
